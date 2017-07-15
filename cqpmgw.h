@@ -14,34 +14,35 @@
 #define CQAPIVERTEXT "9"
 
 #ifdef __cplusplus
+extern "C"
+{
 #define CQEVENT extern "C" __stdcall
-#define CQAPI extern "C" __stdcall
 #else
 #define CQEVENT __stdcall
-#define CQAPI __stdcall
 #endif
+#define CQAPI __stdcall
 
 typedef int32_t CQBOOL;
 
-#define EVENT_IGNORE 0        //ÊÂ¼ş_ºöÂÔ
-#define EVENT_INTERCEPT 1     //ÊÂ¼ş_À¹½Ø £¡×¢Òâ´Ë´¦ÓëVC++ SDK²»Í¬£¡
+#define EVENT_IGNORE 0        //äº‹ä»¶_å¿½ç•¥
+#define EVENT_INTERCEPT 1     //äº‹ä»¶_æ‹¦æˆª ï¼æ³¨æ„æ­¤å¤„ä¸VC++ SDKä¸åŒï¼
 #define EVENT_BLOCK \
 	#error EVENT_BLOCK has been renamed to EVENT_INTERCEPT,use EVENT_INTERCEPT instead
 
-#define REQUEST_ALLOW 1       //ÇëÇó_Í¨¹ı
-#define REQUEST_DENY 2        //ÇëÇó_¾Ü¾ø
+#define REQUEST_ALLOW 1       //è¯·æ±‚_é€šè¿‡
+#define REQUEST_DENY 2        //è¯·æ±‚_æ‹’ç»
 
-#define REQUEST_GROUPADD 1    //ÇëÇó_ÈºÌí¼Ó
-#define REQUEST_GROUPINVITE 2 //ÇëÇó_ÈºÑûÇë
+#define REQUEST_GROUPADD 1    //è¯·æ±‚_ç¾¤æ·»åŠ 
+#define REQUEST_GROUPINVITE 2 //è¯·æ±‚_ç¾¤é‚€è¯·
 
-#define CQLOG_DEBUG 0           //µ÷ÊÔ »ÒÉ«
-#define CQLOG_INFO 10           //ĞÅÏ¢ ºÚÉ«
-#define CQLOG_INFOSUCCESS 11    //ĞÅÏ¢(³É¹¦) ×ÏÉ«
-#define CQLOG_INFORECV 12       //ĞÅÏ¢(½ÓÊÕ) À¶É«
-#define CQLOG_INFOSEND 13       //ĞÅÏ¢(·¢ËÍ) ÂÌÉ«
-#define CQLOG_WARNING 20        //¾¯¸æ ³ÈÉ«
-#define CQLOG_ERROR 30          //´íÎó ºìÉ«
-#define CQLOG_FATAL 40          //ÖÂÃü´íÎó Éîºì
+#define CQLOG_DEBUG 0           //è°ƒè¯• ç°è‰²
+#define CQLOG_INFO 10           //ä¿¡æ¯ é»‘è‰²
+#define CQLOG_INFOSUCCESS 11    //ä¿¡æ¯(æˆåŠŸ) ç´«è‰²
+#define CQLOG_INFORECV 12       //ä¿¡æ¯(æ¥æ”¶) è“è‰²
+#define CQLOG_INFOSEND 13       //ä¿¡æ¯(å‘é€) ç»¿è‰²
+#define CQLOG_WARNING 20        //è­¦å‘Š æ©™è‰²
+#define CQLOG_ERROR 30          //é”™è¯¯ çº¢è‰²
+#define CQLOG_FATAL 40          //è‡´å‘½é”™è¯¯ æ·±çº¢
 
 CQAPI int32_t CQ_sendPrivateMsg(int32_t AuthCode, int64_t QQID, const char *msg);
 CQAPI int32_t CQ_sendGroupMsg(int32_t AuthCode, int64_t groupid, const char *msg);
@@ -59,7 +60,7 @@ CQAPI int32_t CQ_setGroupSpecialTitle(int32_t AuthCode, int64_t groupid, int64_t
 CQAPI int32_t CQ_setDiscussLeave(int32_t AuthCode, int64_t discussid);
 CQAPI int32_t CQ_setFriendAddRequest(int32_t AuthCode, const char *responseflag, int32_t responseoperation, const char *remark);
 CQAPI int32_t CQ_setGroupAddRequestV2(int32_t AuthCode, const char *responseflag, int32_t requesttype, int32_t responseoperation, const char *reason);
-CQAPI const char * CQ_getGroupMemberInfoV2(int32_t AuthCode, int64_t groupid, int64_t QQID, CQBOOL nocache);
+CQAPI const char * CQ_getGroupMemberInfoV2(int32_t AuthCode, int64_t groupid, int64_t QQID, CQBOOL nocache); // è¿”å›åŸå§‹æ•°æ®ï¼Œä½¿ç”¨ `CQ_getGroupMemberInfoStruct` è·å–struct
 CQAPI const char * CQ_getStrangerInfo(int32_t AuthCode, int64_t QQID, CQBOOL nocache);
 CQAPI int32_t CQ_addLog(int32_t AuthCode, int32_t priority, const char *category, const char *content);
 CQAPI const char * CQ_getCookies(int32_t AuthCode);
@@ -69,4 +70,41 @@ CQAPI const char * CQ_getLoginNick(int32_t AuthCode);
 CQAPI const char * CQ_getAppDirectory(int32_t AuthCode);
 CQAPI int32_t CQ_setFatal(int32_t AuthCode, const char *errorinfo);
 
+typedef struct
+{
+	int64_t gid;
+	int64_t qqid;
+	const char *nickname;int16_t nicknameLen;
+	const char *cardname;int16_t cardnameLen;
+	int32_t sex;// 0ç”· 1å¥³
+	int32_t age;
+	const char *region;int16_t regionLen;
+	int32_t joinTime;
+	int32_t lastTalk;
+	const char *level;int16_t levelLen;
+	int32_t permission;
+	int32_t hasBlackMark;
+	const char *specialTitle;int16_t specialTitleLen;
+	int32_t specialTitleDuration;
+	int32_t allowCardModification;
+	
+}CQ_GroupMemberInfo;
+
+const CQ_GroupMemberInfo *CQ_getGroupMemberInfoStruct(int32_t AuthCode, int64_t groupid, int64_t QQID, CQBOOL nocache); // è¯·å¯¹åº”ç”¨ `CQ_freeGroupMemberInfoStruct` é‡Šæ”¾
+void CQ_freeGroupMemberInfoStruct(const CQ_GroupMemberInfo *ptr);
+
+typedef struct
+{
+	int64_t qqid;
+	const char *nickname;int16_t nicknameLen;
+	int32_t sex;// 0ç”· 1å¥³
+	int32_t age;
+}CQ_StrangerInfo;
+
+const CQ_StrangerInfo *CQ_getStrangerInfoStruct(int32_t AuthCode, int64_t QQID, CQBOOL nocache);
+void CQ_freeStrangerInfoStruct(const CQ_StrangerInfo *ptr);
+
+#ifdef __cplusplus
+}
+#endif
 #endif
