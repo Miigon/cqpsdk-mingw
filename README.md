@@ -1,6 +1,6 @@
 **注意：本SDK只支持MinGW64（MinGW32未测试），VC++编译器请使用 https://github.com/CoolQ/cqsdk-vc/**  
 
-# cqsdk-mingw
+# cqpsdk-mingw
 
 使用 C/C++(MinGW) 开发[酷Q](cqp.cc)插件的SDK，适用于API版本9的酷Q和MinGW64编译器  
 使用`build.bat`构建测试插件`com.example.democ`和`com.example.democpp`  
